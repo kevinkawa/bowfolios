@@ -65,6 +65,10 @@ class ProfileCollection extends BaseCollection {
 
     // Throw an error if any of the passed Interest names are not defined.
     Interests.assertNames(interests);
+
+    if (!_.isEqual(_.uniq(interests), interests)) {
+      throw new Meteor.Error(`${interests} has duplicates`);
+    }
     return this._collection.insert({ firstName, lastName, username, bio, interests, picture, title, github,
       facebook, instagram });
   }
